@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список книг</title>
+</head>
+<body>
+    <h1>Список книг</h1>
+    <a href="{% url 'bookAdd' %}"> 
+        <button>Добавить книгу</button>
+    </a>
+    <ul>
+        {% for book in books %}
+            <li>
+                "{{ book.book_name }}" от {{ book.author }}, price: {{ book.price }}, id: {{book.id}}
+
+                <a href="{% url 'bookEdit' book.id %}" style="text-decoration: none;">
+                    <button>Изменить</button>
+                </a>
+
+                <form action="{% url 'bookDelete' book.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagination">
+        <span class="step-links">
+            <span class="current">
+                Страница {{ books.number }} из {{ books.paginator.num_pages }} - 
+            </span>
+
+            {% if books.has_previous %}
+                <a href="?page={{ books.previous_page_number }}">
+                    <button><-- Предыдущая</button>
+                </a>
+            {% endif %}
+
+            {% if books.has_next %}
+                <a href="?page={{ books.next_page_number }}">
+                    <button>Следующая --></button>
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>
