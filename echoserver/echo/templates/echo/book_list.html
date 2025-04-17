@@ -5,22 +5,37 @@
 </head>
 <body>
     <h1>Список книг</h1>
-    <a href="{% url 'bookAdd' %}"> 
-        <button>Добавить книгу</button>
-    </a>
+
+    {% if user.is_authenticated %}
+    {# Пользователь авторизован #}
+        <a href="{% url 'bookAdd' %}"> 
+            <button>Добавить книгу</button>
+        </a>
+        <a href="{% url 'logout' %}">
+            <button>Выйти</button>
+        </a>
+    {% else %}
+    {# Пользователь не авторизован - гость #}
+        <a href="{% url 'home' %}">
+            <button>Авторизоваться</button>
+        </a>
+    {% endif %}
+
     <ul>
         {% for book in books %}
             <li>
                 "{{ book.book_name }}" от {{ book.author }}, price: {{ book.price }}, id: {{book.id}}
 
+                {% if user.role == 'admin' %}
+                {# Удаление и изменение только для админа #}
                 <a href="{% url 'bookEdit' book.id %}" style="text-decoration: none;">
                     <button>Изменить</button>
                 </a>
-
                 <form action="{% url 'bookDelete' book.id %}" method="post" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit">Удалить</button>
                 </form>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
