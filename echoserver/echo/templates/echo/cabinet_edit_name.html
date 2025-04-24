@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Изменить имя</title>
+</head>
+<body>
+    <h1>Изменить имя</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Изменить</button>
+    </form>
+    <a href="{% url 'cabinet' %}"><button>Вернуться в личный кабинет</button></a>
+</body>
+</html>

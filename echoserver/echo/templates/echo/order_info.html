@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Информация по заказу</title>
+</head>
+<body>
+    <h1>Состав заказа {{ order.id }} от {{ order.created_at }}</h1>
+    <a href="{% url 'orders_list' %}"><button>К списку заказов</button></a>
+
+    <ul>
+        {% for book in books_info %}
+            <li>
+                "{{ book.book_name }}" от {{ book.author }}, стоимость: {{ book.price }}, в количестве: {{book.quantity}}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div>
+        <span>
+            <br>
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}  
+            </span>
+
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">
+                    <button><-- Предыдущая</button>
+                </a>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">
+                    <button>Следующая --></button>
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

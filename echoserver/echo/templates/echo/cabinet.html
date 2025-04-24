@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <h1>Личный кабинет</h1>
+
+    <div class="userdata-body">
+        <ul>
+            <li> Логин: {{ user.login }} </li>
+            <li> Роль: {{ user.role }} </li>
+            <li>
+                Имя: {{ user.name }}
+                <a href="{% url 'cabinet_edit_name' %}">
+                    <button>Изменить</button>
+                </a>
+            </li>
+            <li>
+                Email: {{ user.email }}
+                <a href="{% url 'cabinet_edit_email' %}">
+                    <button>Изменить</button>
+                </a>
+            </li>
+            <li>
+                Пароль
+                <a href="{% url 'cabinet_edit_password' %}">
+                    <button>Изменить</button>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <a href="{% url 'book_list' %}"><button>К списку книг</button></a>
+</body>
+</html>

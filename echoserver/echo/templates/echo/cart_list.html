@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Корзина</title>
+</head>
+<body>
+    <h1>Корзина</h1>
+    
+    {% if page_obj.object_list %}
+        <table cellspacing="10">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Цена за шт.</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in page_obj %}
+                <tr>
+                    <td>{{ book.book_name }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.price }} ₽</td>
+                    <td>{{ book.quantity }}</td>
+                    <td>{{ book.total_price }} ₽</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <br>
+            <strong>Итого: {{ total }} ₽</strong>
+        </div>
+
+        <div>
+            <span>
+                <br><br>
+                <span>
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}  
+                </span>
+
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <button><-- Предыдущая</button>
+                    </a>
+                {% endif %}
+    
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <button>Следующая --></button>
+                    </a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <p>Ваша корзина пуста!</p>
+    {% endif %}
+
+    {% if page_obj.object_list %}
+    <a href="{% url 'create_order' %}"><button>Оформить заказ</button></a>
+    <a href="{% url 'cart_clear' %}"><button>Очистить корзину</button></a>
+    {% endif %}
+    <a href="{% url 'book_list' %}"><button>К списку книг</button></a>
+</body>
+</html>

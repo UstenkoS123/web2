@@ -25,9 +25,9 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
-    login = models.CharField(max_length=45, unique=True, db_column='login', primary_key=True)
-    password = models.CharField(max_length=128, db_column='password')
-    email = models.EmailField(db_column='email')
+    login = models.CharField(max_length=100, unique=True, db_column='login', primary_key=True)
+    password = models.CharField(max_length=100, db_column='password')
+    email = models.EmailField(max_length=100 , db_column='email')
     name = models.CharField(max_length=100, db_column='name')
 
     # Роли
@@ -51,3 +51,19 @@ class User(AbstractBaseUser):
 
     class Meta:
         db_table = 'users'
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    total_price = models.IntegerField()
+    
+    class Meta:
+        db_table = 'orders'
+
+class OrderItems(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    book_id = models.IntegerField()
+    quantity = models.IntegerField()
+    
+    class Meta:
+        db_table = 'orders_items'

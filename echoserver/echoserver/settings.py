@@ -137,3 +137,6 @@ AUTH_USER_MODEL = 'echo.User'
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
 ]
+
+TIME_ZONE = 'Asia/Yekaterinburg'
+USE_TZ = True  # Важно включить поддержку часовых поясов
